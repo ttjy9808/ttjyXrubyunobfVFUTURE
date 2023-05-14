@@ -1,6 +1,8 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "TTJY X RUBY HUB RBX FUTURE TECH", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
+
+
 local info = Window:MakeTab({
 	Name = "info/credit",
 	Icon = "rbxassetid://13257297610",
@@ -55,6 +57,16 @@ local Section = info:AddSection({
 local Section = info:AddSection({
 	Name = "-Fix Auto rob pyramid level2"
 })
+
+
+
+local vfuture = Window:MakeTab({
+	Name = "vfuture",
+	Icon = "rbxassetid://13257297610",
+	PremiumOnly = false
+})
+
+
 
 
 
