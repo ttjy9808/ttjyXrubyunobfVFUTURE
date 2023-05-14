@@ -1,5 +1,5 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "TTJY X RUBY HUB", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "TTJY X RUBY HUB RBX FUTURE TECH", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 local info = Window:MakeTab({
 	Name = "info/credit",
