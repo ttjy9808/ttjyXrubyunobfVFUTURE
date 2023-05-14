@@ -66,6 +66,185 @@ local vfuture = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local Section = vfuture:AddSection({
+	Name = "Particle follow you"
+})
+
+local value = false -- Toggle value to control particle emitter
+
+-- Create particle emitter
+local emitter = Instance.new("ParticleEmitter")
+emitter.Rate = 5 -- Adjust the rate of particle emission
+emitter.Lifetime = NumberRange.new(2, 4) -- Adjust the lifetime range of particles
+emitter.Speed = NumberRange.new(5, 10) -- Adjust the speed range of particles
+emitter.Size = NumberSequence.new(0.5) -- Adjust the size of particles
+emitter.Color = ColorSequence.new(Color3.fromRGB(255, 128, 255))
+emitter.SpreadAngle = Vector2.new(25, 25)-- Adjust the color of particles
+
+-- Function to update particle position
+local function updateParticles()
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    if character then
+        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+        
+        if humanoidRootPart then
+            -- Attach emitter to the player's position
+            emitter.Parent = humanoidRootPart
+        end
+    end
+end
+
+-- Function to handle the toggle callback
+local function handleToggle(newValue)
+    value = newValue -- Update the value based on the toggle state
+
+    if value then
+        updateParticles() -- Start following particles if toggle is enabled
+    else
+        emitter.Parent = nil -- Clear emitter parent if toggle is disabled
+    end
+end
+
+-- Connect the toggle callback
+vfuture:AddToggle({
+    Name = "Particle Toggle",
+    Default = false,
+    Callback = handleToggle
+})
+
+-- Connect the updateParticles() function to player's character added event
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+    if value then
+        updateParticles()
+    end
+end)
+
+local Section = vfuture:AddSection({
+	Name = "set time"
+})
+
+
+local value = false -- Toggle value to control day/night setting
+
+-- Function to set the game's lighting to night time
+local function setNightTime()
+    local lighting = game:GetService("Lighting")
+    lighting.ClockTime = 0 -- Set clock time to midnight
+    lighting.FogStart = 0 -- Adjust fog start value as desired
+    lighting.FogEnd = 100 -- Adjust fog end value as desired
+    lighting.Brightness = 0 -- Adjust brightness value as desired
+    lighting.GlobalShadows = true -- Enable global shadows
+end
+
+-- Function to restore the game's lighting to normal time
+local function setNormalTime()
+    local lighting = game:GetService("Lighting")
+    lighting.ClockTime = 12 -- Set clock time to noon
+    lighting.FogStart = 0 -- Adjust fog start value as desired
+    lighting.FogEnd = 100 -- Adjust fog end value as desired
+    lighting.Brightness = 1 -- Adjust brightness value as desired
+    lighting.GlobalShadows = false -- Disable global shadows
+end
+
+-- Function to continuously update the lighting based on the toggle value
+local function updateLighting()
+    while true do
+        if value then
+            setNightTime() -- Set night time if toggle is enabled
+        else
+            setNormalTime() -- Set normal time if toggle is disabled
+        end
+        task.wait() -- Wait for the next frame before updating the lighting again
+    end
+end
+
+-- Function to handle the toggle callback
+local function handleToggle(newValue)
+    value = newValue -- Update the value based on the toggle state
+end
+
+-- Connect the toggle callback
+vfuture:AddToggle({
+    Name = "Night Toggle",
+    Default = false,
+    Callback = handleToggle
+})
+
+-- Start updating the lighting
+spawn(updateLighting)
+
+
+local value = false -- Toggle value to control day/night setting
+
+-- Function to set the game's lighting to day time
+local function setDayTime()
+    local lighting = game:GetService("Lighting")
+    lighting.ClockTime = 12 -- Set clock time to noon
+    lighting.FogStart = 0 -- Adjust fog start value as desired
+    lighting.FogEnd = 100 -- Adjust fog end value as desired
+    lighting.Brightness = 1 -- Adjust brightness value as desired
+    lighting.GlobalShadows = false -- Disable global shadows
+end
+
+-- Function to restore the game's lighting to normal time
+local function setNormalTime()
+    local lighting = game:GetService("Lighting")
+    lighting.ClockTime = 12 -- Set clock time to noon
+    lighting.FogStart = 0 -- Adjust fog start value as desired
+    lighting.FogEnd = 100 -- Adjust fog end value as desired
+    lighting.Brightness = 1 -- Adjust brightness value as desired
+    lighting.GlobalShadows = false -- Disable global shadows
+end
+
+-- Function to continuously update the lighting to day time
+local function updateDayTime()
+    while true do
+        if value then
+            setDayTime() -- Set day time if toggle is enabled
+        else
+            setNormalTime() -- Set normal time if toggle is disabled
+            break -- Exit the loop if toggle is disabled
+        end
+        task.wait() -- Wait for the next frame before updating the lighting again
+    end
+end
+
+-- Function to handle the toggle callback
+local function handleToggle(newValue)
+    value = newValue -- Update the value based on the toggle state
+
+    if value then
+        spawn(updateDayTime) -- Start updating the lighting if toggle is enabled
+    end
+end
+
+-- Connect the toggle callback
+vfuture:AddToggle({
+    Name = "Day",
+    Default = false,
+    Callback = handleToggle
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
